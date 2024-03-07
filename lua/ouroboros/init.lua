@@ -14,7 +14,7 @@ function M.switch()
 
     if((extension ~= "cpp") and (extension ~= "hpp") and
        (extension ~= "c") and (extension ~= "h") and
-       (extension ~= "cc")) then
+       (extension ~= "cc") and (extension ~= "hh")) then
         utils.log("Ouroboros doesn't work on a file ending in: ." .. extension .. ". Aborting.")
            return
     end
@@ -38,11 +38,11 @@ function M.switch()
         
         -- First pass searches for exactly hpp <==> cpp, h <==> c, cc <==> h
         if(extension == "cpp" or extension == "hpp") then
-            desired_extension = utils.ternary(extension == "cpp", "hpp", "cpp") 
+            desired_extension = utils.ternary(extension == "cpp", "hpp", "cpp")
         elseif(extension == "c" or extension == "h") then
             desired_extension = utils.ternary(extension == "c", "h", "c")
-        elseif(extension == "cc") then
-            desired_extension = "h"
+        elseif(extension == "cc" or extension == "hh") then
+            desired_extension = utils.ternary(extension == "cc", "hh", "cc")
         end
 
         first_priority = desired_extension
